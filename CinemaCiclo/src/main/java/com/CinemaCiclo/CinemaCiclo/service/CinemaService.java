@@ -41,7 +41,7 @@ public class CinemaService {
     public Cinema update (Cinema c){
         if (c.getId()!=null){
             Optional<Cinema> i=cinemaRepository.getCinema(c.getId());
-            if (i.isEmpty()){
+            if (!i.isEmpty()){
                 if(c.getName()!=null){
                     i.get().setName(c.getName());
                 }

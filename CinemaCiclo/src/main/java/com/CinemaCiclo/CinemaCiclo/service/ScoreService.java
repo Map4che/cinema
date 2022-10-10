@@ -39,7 +39,7 @@ public class ScoreService {
     public Score update (Score s){
         if(s.getIdScore()!=null){
             Optional<Score> c= scoreRepository.getScore(s.getIdScore());
-            if(c.isEmpty()){
+            if(!c.isEmpty()){
                 if(s.getScore()!=null){
                     c.get().setScore(s.getScore());
                 }

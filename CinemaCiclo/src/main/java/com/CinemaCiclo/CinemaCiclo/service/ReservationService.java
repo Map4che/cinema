@@ -41,11 +41,11 @@ public class ReservationService {
     public Reservation update(Reservation r) {
         if (r.getIdReservation() != null) {
             Optional<Reservation> e = reservationRepository.getReservation(r.getIdReservation());
-            if (e.isEmpty()) {
+            if (!e.isEmpty()) {
                 if (r.getStartDate() != null) {
                     e.get().setStartDate(r.getStartDate());
                 }
-                if (e.isEmpty()) {
+                if (!e.isEmpty()) {
                     if (r.getDevolutionDate() != null) {
                         e.get().setDevolutionDate(r.getDevolutionDate());
                     }
