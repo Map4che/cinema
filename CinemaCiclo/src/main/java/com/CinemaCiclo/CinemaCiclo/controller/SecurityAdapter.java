@@ -16,7 +16,7 @@ public class SecurityAdapter extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests(a -> a
-    .antMatchers("/", "/error", "/webjars/**","/api/**","/h2-console").permitAll().anyRequest().authenticated()
+    .antMatchers("/*","/error", "/webjars/**","/api/**","/h2-console").permitAll().anyRequest().authenticated()
                 
         ).exceptionHandling(e -> e
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))

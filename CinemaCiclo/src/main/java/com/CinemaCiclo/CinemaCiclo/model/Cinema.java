@@ -58,11 +58,6 @@ public class Cinema implements Serializable {
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "idReservation")
     @JsonIgnoreProperties("cinema")
     private List<Reservation> reservations;
-
-    
-    
-      
-
     
     public Category getCategory() {
         return category;

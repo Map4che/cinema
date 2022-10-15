@@ -5,7 +5,14 @@
 package com.CinemaCiclo.CinemaCiclo.service;
 
 import com.CinemaCiclo.CinemaCiclo.model.Reservation;
+import com.CinemaCiclo.CinemaCiclo.model.custome.StatusAmount;
+import com.CinemaCiclo.CinemaCiclo.model.custome.countCinema;
+import com.CinemaCiclo.CinemaCiclo.model.custome.countClient;
 import com.CinemaCiclo.CinemaCiclo.repository.ReservationRepository;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,14 +59,9 @@ public class ReservationService {
                     return reservationRepository.save(e.get());
                 }
             }
-            }
-            return r;
         }
-    
-    
-    
-
-          
+        return r;
+    }
 
     public boolean deleteReservation(int id) {
         Optional<Reservation> r = getReservation(id);
@@ -67,7 +69,39 @@ public class ReservationService {
             reservationRepository.delete(r.get());
             return true;
         }
-            return false;
+        return false;
+    }
+
+    public List<countCinema> getTopRoom() {
+        return reservationRepository.getTopCinema();
+    }
+
+    public List<countClient> getTopClients() {
+        return reservationRepository.getTopClients();
+    }
+
+    public List<Reservation> getReservationsPeriod(String dateA, String dateB) {
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+        Date a = new Date();
+        Date b = new Date();
+        try {
+            a = parser.parse(dateA);
+            b = parser.parse(dateB);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (a.before(b)) {
+            return reservationRepository.getReservationPeriod(a, b);
+        } else {
+            return new ArrayList<>();
         }
     }
 
+    public StatusAmount getReservationsStatusReport() {
+        List<Reservation> completed = reservationRepository.getReservationsByStatus("completed");
+        List<Reservation> cancelled = reservationRepository.getReservationsByStatus("cancelled");
+        return new StatusAmount(completed.size(), cancelled.size());
+
+    }
+
+}

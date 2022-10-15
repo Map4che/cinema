@@ -34,7 +34,7 @@ public class CinemaController {
     @GetMapping("/all")
     public List<Cinema> getCinemas(){
         return cinemaService.getAll();
-}
+    }
     
     @GetMapping("/{id}")
     public Optional<Cinema> getCinema(@PathVariable("id")int id){
